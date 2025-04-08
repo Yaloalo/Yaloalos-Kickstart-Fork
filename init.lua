@@ -242,29 +242,23 @@ require('lazy').setup({
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
 
   --SSSSSSSSSSSSSSEEEEEEEEEEEEETTTTTTTTTTTTUUUUUUUUUUPPPPPPPPPPPPPPPPPPP
-  -- Smear Cursor Plugin
+  --START SCREEN
+  --
   {
-    'sphamba/smear-cursor.nvim',
-    opts = {
-      smear_between_buffers = true,
-      smear_between_neighbor_lines = true,
-      scroll_buffer_space = true,
-      legacy_computing_symbols_support = false,
-      smear_insert_mode = true,
+    'goolord/alpha-nvim',
+    dependencies = {
+      'echasnovski/mini.icons',
+      'nvim-lua/plenary.nvim',
     },
+    config = function()
+      require('alpha').setup(require('alpha.themes.theta').config)
+    end,
   },
 
   -- Haskell Tools
   {
     'mrcjkb/haskell-tools.nvim',
     version = '^4',
-    lazy = false,
-  },
-
-  -- Rustacean Vim
-  {
-    'mrcjkb/rustaceanvim',
-    version = '^5',
     lazy = false,
   },
 
@@ -793,7 +787,7 @@ require('lazy').setup({
 
       require('mason-lspconfig').setup {
         ensure_installed = {}, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer)
-        automatic_installation = false,
+        automatic_installation = true,
         handlers = {
           function(server_name)
             local server = servers[server_name] or {}
@@ -917,7 +911,7 @@ require('lazy').setup({
           -- Accept ([y]es) the completion.
           --  This will auto-import if your LSP supports it.
           --  This will expand snippets if the LSP sent a snippet.
-          ['<C-y>'] = cmp.mapping.confirm { select = true },
+          ['<Tab>'] = cmp.mapping.confirm { select = true },
 
           -- If you prefer more traditional completion keymaps,
           -- you can uncomment the following lines
