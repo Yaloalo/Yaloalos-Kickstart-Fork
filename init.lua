@@ -284,8 +284,18 @@ require('lazy').setup({
           lualine_a = { 'mode' },
           lualine_b = { 'branch', 'diff', 'diagnostics' },
           lualine_c = { 'filename' },
+          -- keep your existing x section untouched
           lualine_x = { 'encoding', 'fileformat', 'filetype' },
-          lualine_y = { 'progress' },
+          -- replace your old y section entirely with this
+          lualine_y = {
+            'progress', -- your original progress indicator
+            {
+              function()
+                return vim.b.disable_autoformat and 'AutoFmt:Off' or 'AutoFmt:On'
+              end,
+              padding = { left = 1, right = 1 }, -- give it a little breathing room
+            },
+          },
           lualine_z = { 'location' },
         },
         inactive_sections = {
@@ -733,6 +743,9 @@ require('lazy').setup({
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
+
+        --removed LSP support for c++, python, rust
+        -[[
         clangd = {
           keys = { { '<leader>ch', '<cmd>ClangdSwitchSourceHeader<cr>', desc = 'Switch Source/Header (C/C++)' } },
           capabilities = { offsetEncoding = { 'utf-16' } },
@@ -741,6 +754,8 @@ require('lazy').setup({
         -- gopls = {},
         pyright = {},
         rust_analyzer = {},
+        ]],
+
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
         -- Some languages (like typescript) have entire language plugins that can be useful:
@@ -854,6 +869,8 @@ require('lazy').setup({
     },
   },
 
+  --Removed Autocompletion
+  --[[
   { -- Autocompletion
     'hrsh7th/nvim-cmp',
     event = 'InsertEnter',
@@ -971,6 +988,7 @@ require('lazy').setup({
       }
     end,
   },
+  ]]
 
   { -- You can easily change to a different colorscheme.
     -- Change the name of the colorscheme plugin below, and then
